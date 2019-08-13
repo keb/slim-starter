@@ -4,15 +4,15 @@ namespace App\Config;
 
 class Config
 {
-    private $map;
+    private $vars;
 
-    public function __construct(array $map)
+    public function __construct(array $vars)
     {
-        $this->map = $map;
+        $this->vars = $vars;
     }
 
-    public function get(): array
+    public function get(string $key): array
     {
-        return $this->map;
+        return $this->vars[$key];
     }
 }
