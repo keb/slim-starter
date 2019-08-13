@@ -12,10 +12,12 @@
     "require": {
         "slim/slim": "^4.1",
         "slim/psr7": "^0.4.0",
-        "php-di/php-di": "^6.0"
+        "php-di/php-di": "^6.0",
+        "league/plates": "^3.3"
     },
     "require-dev": {
-        "vimeo/psalm": "^3.4"
+        "vimeo/psalm": "^3.4",
+        "phpunit/phpunit": "^8.3"
     },
     "autoload": {
         "psr-4": {
@@ -23,6 +25,7 @@
         }
     },
     "scripts": {
+        "test": "vendor\\bin\\phpunit",
         "psalm": "vendor\\bin\\psalm"
     }
 }

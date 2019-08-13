@@ -33,7 +33,7 @@ foreach ($routes as $pattern => [$methods, $callable]) {
  * @param bool $logErrors -> Paramter is passed to the default ErrorHandler
  * @param bool $logErrorDetails -> Display error details in error log; replaceable by callable
  * 
- * Note: Add this Middleware last
+ * Note: Add this middleware last
  */
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 

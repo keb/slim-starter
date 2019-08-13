@@ -5,26 +5,24 @@ namespace App\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use App\Services\FooService;
+use League\Plates\Engine;
+use App\Config\Config;
 
 class AppController
 {
-    private $foo;
+    private $tpl;
+    private $config;
 
-    public function __construct(FooService $foo)
+    public function __construct(Engine $tpl, Config $config)
     {
-        $this->foo = $foo;
+        $this->tpl = $tpl;
+        $this->config = $config;
     }
 
     public function index(Request $request, Response $response): Response
     {
-        $response->getBody()->write('hello world');
-        return $asdf;
-    }
-
-    public function foo(Request $request, Response $response): Response
-    {
-        $response->getBody()->write( $this->foo->foo() );
+        $template = $this->tpl->render('index');
+        $response->getBody()->write($template);
         return $response;
     }
 }
