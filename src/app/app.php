@@ -2,7 +2,7 @@
 
 use Slim\Factory\AppFactory;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * Get Container
@@ -26,7 +26,6 @@ foreach ($routes as $pattern => [$methods, $callable]) {
 /**
  * Middleware
  */
-
 /**
  * Error Middleware
  * @param bool $displayErrorDetails -> Should be set to false in production
@@ -35,7 +34,24 @@ foreach ($routes as $pattern => [$methods, $callable]) {
  * 
  * Note: Add this middleware last
  */
+$defaultHandler = function(
+    \Psr\Http\Message\ServerRequestInterface $request,
+    Throwable $exception,
+    bool $displayErrorDetails,
+    bool $logErrors,
+    bool $logErrorDetails
+) use ($app) {
+    $payload = ['error' => $exception->getMessage()];
+    $status = $exception->getCode();
+    $json = json_encode($payload);
+
+    $response = $app->getResponseFactory()->createResponse();
+    $response->getBody()->write($json);
+    return $response->withStatus($status)->withHeader('Content-type', 'application/json');
+};
+
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
+$errorMiddleware->setDefaultErrorHandler($defaultHandler);
 
 /**
  * Run Application

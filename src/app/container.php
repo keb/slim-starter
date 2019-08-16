@@ -2,12 +2,12 @@
 
 use function DI\create;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * Configurations
  */
-$config = include_once __DIR__ . '/../config.php';
+$config = include_once __DIR__ . '/../../config.php';
 
 /**
  * PHP Definitions
@@ -22,6 +22,7 @@ $builder->addDefinitions([
     // Templating Engine
     League\Plates\Engine::class => create()
         ->constructor($config['app']['templates_path'])
+    
 ]);
 
 $container = $builder->build();
