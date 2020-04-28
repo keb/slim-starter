@@ -2,6 +2,6 @@
 
 return [
     'app' => [
-        'templates_path' => __DIR__ . '/src/Templates/'
+        'templates_path' => __DIR__ . '/src/app/Templates/'
     ]
 ];

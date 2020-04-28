@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+    php-fpm:
+        build:
+            context:
+                ./.docker/php
+        volumes:
+            - .:/var/www/
+    composer:
+        build:
+            context:
+                ./.docker/composer
+        volumes:
+            - .:/var/www/
+        working_dir: /var/www/
+        depends_on:
+            - php-fpm
+    nginx:
+        build:
+            context:
+                ./.docker/nginx
+        volumes:
+            - .:/var/www/
+            - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./.docker/nginx/sites/:/etc/nginx/sites-available
+            - ./.docker/nginx/conf.d/:/etc/nginx/conf.d
+        depends_on:
+            - php-fpm
+        ports:
+            - "80:80"
+            - "443:443"
+    # uncomment if you want a mariadb container
+    # database:
+    #     build:
+    #         context:
+    #             ./.docker/database
+    #     environment:
+    #         - MYSQL_DATABASE=mydb
+    #         - MYSQL_USER=myuser
+    #         - MYSQL_PASSWORD=secret
+    #         - MYSQL_ROOT_PASSWORD=docker
+    #     volumes:
+    #         - ./.docker/database/data.sql:/docker-entrypoint-initdb.d/data.sql
